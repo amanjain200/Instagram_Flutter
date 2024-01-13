@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_flutter/resources/auth_methods.dart';
+import 'package:instagram_flutter/responsive/mobile_screen_layout.dart';
+import 'package:instagram_flutter/responsive/responsive_layout_screen.dart';
+import 'package:instagram_flutter/responsive/web_screen_layout.dart';
+import 'package:instagram_flutter/screens/login_screen.dart';
 import 'package:instagram_flutter/utils/colors.dart';
 import 'package:instagram_flutter/utils/utils.dart';
 import 'package:instagram_flutter/widgets/text_field_input.dart';
@@ -33,6 +37,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _bioController.dispose();
   }
 
+  void navigatetoLoginScreen() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+  }
+
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
+  }
+
   void signUpUser() async {
     setState(() {
       _isLoading = true;
@@ -49,14 +65,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
     if (res != "success") {
       showSnackBar(context, res);
-    } else {}
-  }
-
-  void selectImage() async {
-    Uint8List im = await pickImage(ImageSource.gallery);
-    setState(() {
-      _image = im;
-    });
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -79,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               height: 64,
             ),
             const SizedBox(
-              height: 64,
+              height: 34,
             ),
             Stack(
               children: [
@@ -181,17 +199,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               children: [
                 Container(
                   child: const Text(
-                    'Don\'t have an account?',
+                    'Already have an account?',
                   ),
                   padding: const EdgeInsets.symmetric(
                     vertical: 9,
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: navigatetoLoginScreen,
                   child: Container(
                     child: const Text(
-                      'Sign up.',
+                      'LogIn.',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     padding: EdgeInsets.symmetric(
