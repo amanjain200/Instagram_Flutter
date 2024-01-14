@@ -105,4 +105,25 @@ class AuthMethods {
     }
     return res;
   }
+
+  //adding the post
+  Future<String> addPost({
+    required String caption,
+    required Uint8List file,
+  }) async {
+    String res = 'Some Error Occured';
+
+    try {
+      if (caption.isNotEmpty && file != null) {
+        String photoUrl =
+            await StorageMethods().uploadImageToStorage('post_pic', file, true);
+
+        res = "success";
+      }
+    } catch (e) {
+      res = e.toString();
+    }
+
+    return res;
+  }
 }

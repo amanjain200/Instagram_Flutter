@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/providers/user_provider.dart';
 import 'package:instagram_flutter/utils/colors.dart';
+import 'package:instagram_flutter/utils/global_variables.dart';
 import 'package:provider/provider.dart';
 import 'package:instagram_flutter/models/user.dart' as model;
 
@@ -46,33 +47,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: [
-          Container(
-            child: Center(
-              child: Text("Home"),
-            ),
-          ),
-          Container(
-            child: Center(
-              child: Text("Search"),
-            ),
-          ),
-          Container(
-            child: Center(
-              child: Text("Add"),
-            ),
-          ),
-          Container(
-            child: Center(
-              child: Text("Favorite"),
-            ),
-          ),
-          Container(
-            child: Center(
-              child: Text("Profile"),
-            ),
-          ),
-        ],
+        children: homeScreenItems,
         controller: pageController,
         onPageChanged: onPageChanged,
       ),
